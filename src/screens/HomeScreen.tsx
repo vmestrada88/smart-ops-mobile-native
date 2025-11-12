@@ -6,7 +6,10 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
+import { useAuth } from '../hooks/useAuth';
 
 /**
  * HomeScreen Component
@@ -15,14 +18,62 @@ import {
  * Displays information about intelligent security and low-voltage solutions.
  */
 export default function HomeScreen({ navigation }: any) {
+  const { user, logout, loading } = useAuth();
+
+  // Show loading while checking auth
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <ActivityIndicator size="large" color="#14b8a6" />
+      </View>
+    );
+  }
+
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Logout',
+          style: 'destructive',
+          onPress: async () => {
+            await logout();
+            navigation.navigate('Login');
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <ScrollView style={styles.container}>
+      {/* User Info Header */}
+      {user ? (
+        <View style={styles.userHeader}>
+          <Text style={styles.welcomeText}>Welcome, {user.name}!</Text>
+          <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+            <Text style={styles.logoutButtonText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.guestHeader}>
+          <Text style={styles.guestText}>👋 Guest Mode</Text>
+          <TouchableOpacity 
+            onPress={() => navigation.navigate('Login')} 
+            style={styles.loginLink}>
+            <Text style={styles.loginLinkText}>Sign In</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
       <View style={styles.heroSection}>
         <Image
           source={require('../assets/images/logo.jpg')}
           style={styles.logo}
         />
-        <Text style={styles.title}>Smart Solution for Living</Text>
+        <Text style={styles.title}>Smart Solution for Living LLC</Text>
         <Text style={styles.description}>
           We provide reliable, intelligent low-voltage and smart security solutions for modern homes and businesses.
         </Text>
@@ -74,6 +125,60 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
+  },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  userHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#f9fafb',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  welcomeText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1f2937',
+  },
+  logoutButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: '#ef4444',
+    borderRadius: 6,
+  },
+  logoutButtonText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  guestHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#fff7ed',
+    borderBottomWidth: 1,
+    borderBottomColor: '#fed7aa',
+  },
+  guestText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#9a3412',
+  },
+  loginLink: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: '#14b8a6',
+    borderRadius: 6,
+  },
+  loginLinkText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '600',
   },
   heroSection: {
     alignItems: 'center',
