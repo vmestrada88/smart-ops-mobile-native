@@ -9,6 +9,7 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
+import { Shield, Home, Lock, Volume2 } from 'lucide-react-native';
 import { useAuth } from '../hooks/useAuth';
 
 /**
@@ -95,25 +96,39 @@ export default function HomeScreen({ navigation }: any) {
 
       <View style={styles.servicesSection}>
         <Text style={styles.servicesTitle}>Our Services</Text>
+        <Text style={styles.servicesSubtitle}>
+          We offer tailored solutions for residential and commercial spaces.
+        </Text>
+        
         <View style={styles.serviceCard}>
-          <Text style={styles.serviceIcon}>🔒</Text>
+          <Shield size={40} color="#14b8a6" style={styles.serviceIconSvg} />
           <Text style={styles.serviceName}>Security Systems</Text>
           <Text style={styles.serviceDescription}>
-            Advanced security solutions for your peace of mind
+            Installation and maintenance of smart security cameras, alarm systems, and motion detectors.
           </Text>
         </View>
+
         <View style={styles.serviceCard}>
-          <Text style={styles.serviceIcon}>📱</Text>
-          <Text style={styles.serviceName}>Smart Home</Text>
+          <Home size={40} color="#14b8a6" style={styles.serviceIconSvg} />
+          <Text style={styles.serviceName}>Home Automation</Text>
           <Text style={styles.serviceDescription}>
-            Intelligent automation for modern living
+            Full smart home integration including lighting, climate, blinds, and device control to enhance comfort and efficiency.
           </Text>
         </View>
+
         <View style={styles.serviceCard}>
-          <Text style={styles.serviceIcon}>📡</Text>
-          <Text style={styles.serviceName}>Low Voltage</Text>
+          <Lock size={40} color="#14b8a6" style={styles.serviceIconSvg} />
+          <Text style={styles.serviceName}>Access Control</Text>
           <Text style={styles.serviceDescription}>
-            Professional installation and maintenance
+            Keyless smart locks and intercom systems for safe and convenient access management.
+          </Text>
+        </View>
+
+        <View style={styles.serviceCard}>
+          <Volume2 size={40} color="#14b8a6" style={styles.serviceIconSvg} />
+          <Text style={styles.serviceName}>Audio & TV Automation</Text>
+          <Text style={styles.serviceDescription}>
+            Integrated home theater, multi-room audio, and TV setups with seamless network connectivity and centralized control.
           </Text>
         </View>
       </View>
@@ -288,36 +303,57 @@ const styles = StyleSheet.create({
   servicesSection: {
     padding: 20,
     paddingTop: 40,
+    backgroundColor: '#ffffff',
   },
   servicesTitle: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#1f2937',
-    marginBottom: 24,
+    marginBottom: 8,
     textAlign: 'center',
+  },
+  servicesSubtitle: {
+    fontSize: 14,
+    color: '#6b7280',
+    textAlign: 'center',
+    marginBottom: 32,
+    paddingHorizontal: 20,
+    maxWidth: 600,
+    alignSelf: 'center',
   },
   serviceCard: {
     backgroundColor: '#f9fafb',
     borderRadius: 12,
-    padding: 20,
-    marginBottom: 16,
+    padding: 24,
+    marginBottom: 20,
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  serviceIconSvg: {
+    marginBottom: 16,
   },
   serviceIcon: {
     fontSize: 48,
-    marginBottom: 12,
+    marginBottom: 16,
   },
   serviceName: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#1f2937',
     marginBottom: 8,
+    textAlign: 'center',
   },
   serviceDescription: {
     fontSize: 14,
     color: '#6b7280',
     textAlign: 'center',
+    lineHeight: 20,
   },
 });
