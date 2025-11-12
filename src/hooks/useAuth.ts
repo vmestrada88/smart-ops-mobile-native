@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API_ENDPOINTS } from '../config/api';
+import API_BASE_URL from '../constants/api';
 
 interface User {
   id: number;
@@ -20,6 +20,12 @@ interface AuthState {
   token: string | null;
   loading: boolean;
 }
+
+const AUTH_ENDPOINTS = {
+  LOGIN: `${API_BASE_URL}/login`,  // Changed from /auth/login to /login
+  REGISTER: `${API_BASE_URL}/register`,
+  RESET_PASSWORD: `${API_BASE_URL}/reset-password`,
+};
 
 export const useAuth = () => {
   const [authState, setAuthState] = useState<AuthState>({
@@ -67,32 +73,57 @@ export const useAuth = () => {
   };
 
   const login = async (email: string, password: string) => {
-    const response = await fetch(API_ENDPOINTS.LOGIN, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    console.log('🔐 Attempting login to:', AUTH_ENDPOINTS.LOGIN);
+    console.log('📧 Email:', email);
+    
+    try {
+      const response = await fetch(AUTH_ENDPOINTS.LOGIN, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const data = await response.json();
+      console.log('📡 Response status:', response.status);
+      console.log('📡 Response headers:', response.headers);
 
-    if (!response.ok) {
-      throw new Error(data.message || 'Login failed');
+      // Get response text first to debug
+      const responseText = await response.text();
+      console.log('📄 Response text:', responseText.substring(0, 200));
+
+      // Try to parse as JSON
+      let data;
+      try {
+        data = JSON.parse(responseText);
+        console.log('📦 Response data:', data);
+      } catch (parseError) {
+        console.error('❌ JSON Parse Error. Response was:', responseText.substring(0, 500));
+        throw new Error(`Server returned invalid JSON. Status: ${response.status}`);
+      }
+
+      if (!response.ok) {
+        throw new Error(data.message || data.error || 'Login failed');
+      }
+
+      // Save token and user
+      await AsyncStorage.setItem('token', data.token);
+      await AsyncStorage.setItem('user', JSON.stringify(data.user));
+
+      setAuthState({
+        isAuthenticated: true,
+        user: data.user,
+        token: data.token,
+        loading: false,
+      });
+
+      console.log('✅ Login successful!');
+      return data;
+    } catch (error: any) {
+      console.error('❌ Login error:', error);
+      console.error('Error message:', error.message);
+      throw error;
     }
-
-    // Save token and user
-    await AsyncStorage.setItem('token', data.token);
-    await AsyncStorage.setItem('user', JSON.stringify(data.user));
-
-    setAuthState({
-      isAuthenticated: true,
-      user: data.user,
-      token: data.token,
-      loading: false,
-    });
-
-    return data;
   };
 
   const logout = async () => {
