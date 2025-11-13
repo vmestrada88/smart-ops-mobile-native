@@ -27,7 +27,6 @@ export default function ProductsScreen() {
   
   // Filtros
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [priceRange, setPriceRange] = useState<string>('all');
 
   /**
    * Load products from API
@@ -79,28 +78,8 @@ export default function ProductsScreen() {
       filtered = filtered.filter(p => p.category === selectedCategory);
     }
 
-    // Filter by price range
-    if (priceRange !== 'all' && filtered.length > 0) {
-      filtered = filtered.filter(p => {
-        if (!p.price) return false;
-        
-        switch (priceRange) {
-          case 'under50':
-            return p.price < 50;
-          case '50to100':
-            return p.price >= 50 && p.price <= 100;
-          case '100to500':
-            return p.price > 100 && p.price <= 500;
-          case 'over500':
-            return p.price > 500;
-          default:
-            return true;
-        }
-      });
-    }
-
     return filtered;
-  }, [products, selectedCategory, priceRange]);
+  }, [products, selectedCategory]);
 
   /**
    * Render individual product item
@@ -134,6 +113,11 @@ export default function ProductsScreen() {
           )}
           {item.model && (
             <Text style={styles.productModel}>Model: {item.model}</Text>
+          )}
+          {item.priceSell !== undefined && (
+            <Text style={styles.productPrice}>
+              ${item.priceSell.toFixed(2)}
+            </Text>
           )}
           
           {/* Descripción expandible */}
@@ -178,61 +162,29 @@ export default function ProductsScreen() {
 
       {/* Filtros */}
       <View style={styles.filtersContainer}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filtersScroll}>
-          {/* Filtro por categoría */}
-          <View style={styles.filterGroup}>
-            <Text style={styles.filterLabel}>Category</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {categories.map((cat) => (
-                <TouchableOpacity
-                  key={cat}
-                  style={[
-                    styles.filterChip,
-                    selectedCategory === cat && styles.filterChipActive
-                  ]}
-                  onPress={() => setSelectedCategory(cat)}
-                >
-                  <Text style={[
-                    styles.filterChipText,
-                    selectedCategory === cat && styles.filterChipTextActive
-                  ]}>
-                    {cat === 'all' ? 'All' : cat}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
+        {/* Filtro por categoría */}
+        <View style={styles.filterGroup}>
+          <Text style={styles.filterLabel}>Category</Text>
+          <View style={styles.filterChipsContainer}>
+            {categories.map((cat) => (
+              <TouchableOpacity
+                key={cat}
+                style={[
+                  styles.filterChip,
+                  selectedCategory === cat && styles.filterChipActive
+                ]}
+                onPress={() => setSelectedCategory(cat)}
+              >
+                <Text style={[
+                  styles.filterChipText,
+                  selectedCategory === cat && styles.filterChipTextActive
+                ]}>
+                  {cat === 'all' ? 'All' : cat}
+                </Text>
+              </TouchableOpacity>
+            ))}
           </View>
-
-          {/* Filtro por precio */}
-          <View style={styles.filterGroup}>
-            <Text style={styles.filterLabel}>Price</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {[
-                { value: 'all', label: 'All' },
-                { value: 'under50', label: '< $50' },
-                { value: '50to100', label: '$50 - $100' },
-                { value: '100to500', label: '$100 - $500' },
-                { value: 'over500', label: '> $500' },
-              ].map((option) => (
-                <TouchableOpacity
-                  key={option.value}
-                  style={[
-                    styles.filterChip,
-                    priceRange === option.value && styles.filterChipActive
-                  ]}
-                  onPress={() => setPriceRange(option.value)}
-                >
-                  <Text style={[
-                    styles.filterChipText,
-                    priceRange === option.value && styles.filterChipTextActive
-                  ]}>
-                    {option.label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </View>
-        </ScrollView>
+        </View>
       </View>
 
       <FlatList
@@ -342,6 +294,12 @@ const styles = StyleSheet.create({
     color: '#6b7280',
     marginBottom: 4,
   },
+  productPrice: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#14b8a6',
+    marginTop: 4,
+  },
   productDescription: {
     fontSize: 12,
     color: '#4b5563',
@@ -386,28 +344,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderBottomWidth: 1,
     borderBottomColor: '#e5e7eb',
-    paddingVertical: 12,
-  },
-  filtersScroll: {
-    paddingHorizontal: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
   },
   filterGroup: {
-    marginBottom: 8,
+    marginBottom: 4,
   },
   filterLabel: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
     color: '#6b7280',
-    marginBottom: 8,
+    marginBottom: 6,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
+  filterChipsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
   filterChip: {
     backgroundColor: '#f3f4f6',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    marginRight: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: '#e5e7eb',
   },
@@ -416,7 +376,7 @@ const styles = StyleSheet.create({
     borderColor: '#14b8a6',
   },
   filterChipText: {
-    fontSize: 13,
+    fontSize: 12,
     color: '#4b5563',
     fontWeight: '500',
   },
