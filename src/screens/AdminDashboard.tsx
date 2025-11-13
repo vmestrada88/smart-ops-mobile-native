@@ -1,30 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { useAuth } from '../hooks/useAuth';
-import { Users, Package, Calendar, FileText, List, FilePlus, ClipboardList, IdCard } from 'lucide-react-native';
+import { Send, SendHorizontal, DollarSign, CircleDollarSign, Users, Package, Calendar, IdCard } from 'lucide-react-native';
 
 /**
  * AdminDashboard Component
  * Dashboard for admin users
  */
 export default function AdminDashboard({ navigation }: any) {
-  const { user, logout } = useAuth();
-
-  const handleLogout = async () => {
-    await logout();
-    navigation.navigate('Home');
-  };
-
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Admin Dashboard</Text>
-        <Text style={styles.welcome}>Welcome, {user?.name}</Text>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-
       <View style={styles.content}>
         <Text style={styles.sectionTitle}>Admin Features</Text>
         <Text style={styles.info}>
@@ -34,7 +18,7 @@ export default function AdminDashboard({ navigation }: any) {
         {/* Admin feature cards */}
         <TouchableOpacity 
           style={styles.featureCard}
-          onPress={() => console.log('Navigate to Clients')}>
+          onPress={() => navigation.navigate('Clients')}>
           <View style={styles.cardHeader}>
             <Users size={32} color="#14b8a6" />
             <View style={styles.cardTextContainer}>
@@ -46,7 +30,7 @@ export default function AdminDashboard({ navigation }: any) {
 
         <TouchableOpacity 
           style={styles.featureCard}
-          onPress={() => console.log('Navigate to Inventory')}>
+          onPress={() => navigation.navigate('Inventory')}>
           <View style={styles.cardHeader}>
             <Package size={32} color="#14b8a6" />
             <View style={styles.cardTextContainer}>
@@ -58,7 +42,7 @@ export default function AdminDashboard({ navigation }: any) {
 
         <TouchableOpacity 
           style={styles.featureCard}
-          onPress={() => console.log('Navigate to Calendar')}>
+          onPress={() => navigation.navigate('Calendar')}>
           <View style={styles.cardHeader}>
             <Calendar size={32} color="#14b8a6" />
             <View style={styles.cardTextContainer}>
@@ -70,9 +54,9 @@ export default function AdminDashboard({ navigation }: any) {
 
         <TouchableOpacity 
           style={styles.featureCard}
-          onPress={() => console.log('Navigate to Create Invoice')}>
+          onPress={() => navigation.navigate('CreateInvoice')}>
           <View style={styles.cardHeader}>
-            <FilePlus size={32} color="#14b8a6" />
+            <CircleDollarSign size={32} color="#14b8a6" />
             <View style={styles.cardTextContainer}>
               <Text style={styles.featureTitle}>Create Invoice</Text>
               <Text style={styles.featureDescription}>Generate new invoices for clients</Text>
@@ -82,9 +66,9 @@ export default function AdminDashboard({ navigation }: any) {
 
         <TouchableOpacity 
           style={styles.featureCard}
-          onPress={() => console.log('Navigate to Invoice List')}>
+          onPress={() => navigation.navigate('InvoiceList')}>
           <View style={styles.cardHeader}>
-            <FileText size={32} color="#14b8a6" />
+            <DollarSign size={32} color="#14b8a6" />
             <View style={styles.cardTextContainer}>
               <Text style={styles.featureTitle}>Invoice List</Text>
               <Text style={styles.featureDescription}>View and manage all invoices</Text>
@@ -94,9 +78,9 @@ export default function AdminDashboard({ navigation }: any) {
 
         <TouchableOpacity 
           style={styles.featureCard}
-          onPress={() => console.log('Navigate to Create Proposal')}>
+          onPress={() => navigation.navigate('CreateProposal')}>
           <View style={styles.cardHeader}>
-            <ClipboardList size={32} color="#14b8a6" />
+            <Send size={32} color="#14b8a6" />
             <View style={styles.cardTextContainer}>
               <Text style={styles.featureTitle}>Create Proposal</Text>
               <Text style={styles.featureDescription}>Create proposals for new projects</Text>
@@ -106,9 +90,9 @@ export default function AdminDashboard({ navigation }: any) {
 
         <TouchableOpacity 
           style={styles.featureCard}
-          onPress={() => console.log('Navigate to Proposal List')}>
+          onPress={() => navigation.navigate('ProposalList')}>
           <View style={styles.cardHeader}>
-            <List size={32} color="#14b8a6" />
+            <SendHorizontal size={32} color="#14b8a6" />
             <View style={styles.cardTextContainer}>
               <Text style={styles.featureTitle}>Proposal List</Text>
               <Text style={styles.featureDescription}>View and track all proposals</Text>
@@ -117,7 +101,7 @@ export default function AdminDashboard({ navigation }: any) {
         </TouchableOpacity>
                 <TouchableOpacity 
           style={styles.featureCard}
-          onPress={() => console.log('Navigate to Technician')}>
+          onPress={() => navigation.navigate('Technician')}>
           <View style={styles.cardHeader}>
             <IdCard size={32} color="#14b8a6" />
             <View style={styles.cardTextContainer}>
@@ -135,33 +119,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f4f6',
-  },
-  header: {
-    backgroundColor: '#14b8a6',
-    padding: 20,
-    paddingTop: 60,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginBottom: 8,
-  },
-  welcome: {
-    fontSize: 16,
-    color: '#ffffff',
-    marginBottom: 16,
-  },
-  logoutButton: {
-    backgroundColor: '#ffffff',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignSelf: 'flex-start',
-  },
-  logoutText: {
-    color: '#14b8a6',
-    fontWeight: '600',
   },
   content: {
     padding: 20,

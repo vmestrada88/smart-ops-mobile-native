@@ -1,29 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { useAuth } from '../hooks/useAuth';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 /**
  * UserDashboard Component
  * Dashboard for regular users
  */
 export default function UserDashboard({ navigation }: any) {
-  const { user, logout } = useAuth();
-
-  const handleLogout = async () => {
-    await logout();
-    navigation.navigate('Home');
-  };
-
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>User Dashboard</Text>
-        <Text style={styles.welcome}>Welcome, {user?.name}</Text>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-
       <View style={styles.content}>
         <Text style={styles.sectionTitle}>Your Features</Text>
         <Text style={styles.info}>
@@ -54,33 +38,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f4f6',
-  },
-  header: {
-    backgroundColor: '#3b82f6',
-    padding: 20,
-    paddingTop: 60,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginBottom: 8,
-  },
-  welcome: {
-    fontSize: 16,
-    color: '#ffffff',
-    marginBottom: 16,
-  },
-  logoutButton: {
-    backgroundColor: '#ffffff',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignSelf: 'flex-start',
-  },
-  logoutText: {
-    color: '#3b82f6',
-    fontWeight: '600',
   },
   content: {
     padding: 20,
