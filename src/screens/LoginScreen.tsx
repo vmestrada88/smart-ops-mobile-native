@@ -35,10 +35,19 @@ export default function LoginScreen() {
     setLoading(true);
 
     try {
-      await login(email, password);
+      const data = await login(email, password);
       
-      // Navigate to Home
-      navigation.navigate('Home' as never);
+      // Navigate based on user role
+      // TODO: Implement role-based navigation when roles are defined in backend
+      const userRole = data?.user?.role || 'user'; // Default to 'user' if no role
+      
+      console.log('👤 User role:', userRole);
+      
+      if (userRole === 'admin') {
+        navigation.navigate('AdminDashboard' as never);
+      } else {
+        navigation.navigate('UserDashboard' as never);
+      }
     } catch (error: any) {
       Alert.alert('Login Error', error.message || 'Something went wrong');
     } finally {

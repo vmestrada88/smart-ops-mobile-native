@@ -12,6 +12,8 @@ import { StatusBar } from 'react-native';
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ProductsScreen from './src/screens/ProductsScreen';
+import AdminDashboard from './src/screens/AdminDashboard';
+import UserDashboard from './src/screens/UserDashboard';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,16 +23,26 @@ function App(): React.JSX.Element {
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Login"
+          initialRouteName="Home"
           screenOptions={{
             headerShown: false,
           }}>
+          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen 
             name="Login" 
             component={LoginScreen}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen 
+            name="AdminDashboard" 
+            component={AdminDashboard}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="UserDashboard" 
+            component={UserDashboard}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen 
             name="Products" 
             component={ProductsScreen}
