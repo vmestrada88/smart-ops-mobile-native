@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,10 @@ import {
   Image,
   TouchableOpacity,
   RefreshControl,
+  ScrollView,
 } from 'react-native';
 import { getProducts, Product } from '../services/productService';
+import { ChevronDown } from 'lucide-react-native';
 
 /**
  * ProductsScreen Component
@@ -21,6 +23,10 @@ export default function ProductsScreen() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
+  
+  // Filtros
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   /**
    * Load products from API
@@ -52,49 +58,78 @@ export default function ProductsScreen() {
   }, []);
 
   /**
+   * Get unique categories from products
+   */
+  const categories = useMemo(() => {
+    const cats = products
+      .map(p => p.category)
+      .filter((cat): cat is string => !!cat);
+    return ['all', ...Array.from(new Set(cats))];
+  }, [products]);
+
+  /**
+   * Filter products based on selected filters
+   */
+  const filteredProducts = useMemo(() => {
+    let filtered = products;
+
+    // Filter by category
+    if (selectedCategory !== 'all') {
+      filtered = filtered.filter(p => p.category === selectedCategory);
+    }
+
+    return filtered;
+  }, [products, selectedCategory]);
+
+  /**
    * Render individual product item
    */
-  const renderProduct = ({ item }: { item: Product }) => (
-    <TouchableOpacity style={styles.productCard}>
-      {item.image_url ? (
-        <Image
-          source={{ uri: item.image_url }}
-          style={styles.productImage}
-          resizeMode="cover"
-        />
-      ) : (
-        <View style={[styles.productImage, styles.placeholderImage]}>
-          <Text style={styles.placeholderText}>No Image</Text>
+  const renderProduct = ({ item }: { item: Product }) => {
+    const isExpanded = expandedId === item.id;
+
+    return (
+      <TouchableOpacity 
+        style={styles.productCard}
+        onPress={() => setExpandedId(isExpanded ? null : item.id)}
+        activeOpacity={0.7}
+      >
+        {item.image_url ? (
+          <Image
+            source={{ uri: item.image_url }}
+            style={styles.productImage}
+            resizeMode="cover"
+          />
+        ) : (
+          <View style={[styles.productImage, styles.placeholderImage]}>
+            <Text style={styles.placeholderText}>No Image</Text>
+          </View>
+        )}
+        <View style={styles.productInfo}>
+          <Text style={styles.productName} numberOfLines={2}>
+            {item.name}
+          </Text>
+          {item.brand && (
+            <Text style={styles.productBrand}>{item.brand}</Text>
+          )}
+          {item.model && (
+            <Text style={styles.productModel}>Model: {item.model}</Text>
+          )}
+          {item.priceSell !== undefined && (
+            <Text style={styles.productPrice}>
+              ${item.priceSell.toFixed(2)}
+            </Text>
+          )}
+          
+          {/* Descripción expandible */}
+          {isExpanded && item.description && (
+            <Text style={styles.productDescription}>
+              {item.description}
+            </Text>
+          )}
         </View>
-      )}
-      <View style={styles.productInfo}>
-        <Text style={styles.productName} numberOfLines={2}>
-          {item.name}
-        </Text>
-        {item.brand && (
-          <Text style={styles.productBrand}>{item.brand}</Text>
-        )}
-        {item.model && (
-          <Text style={styles.productModel}>Model: {item.model}</Text>
-        )}
-        {item.description && (
-          <Text style={styles.productDescription} numberOfLines={3}>
-            {item.description}
-          </Text>
-        )}
-        {item.price && (
-          <Text style={styles.productPrice}>
-            ${item.price.toFixed(2)}
-          </Text>
-        )}
-        {item.stock_quantity !== undefined && (
-          <Text style={styles.productStock}>
-            Stock: {item.stock_quantity}
-          </Text>
-        )}
-      </View>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+    );
+  };
 
   if (loading) {
     return (
@@ -121,11 +156,39 @@ export default function ProductsScreen() {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Products</Text>
         <Text style={styles.headerSubtitle}>
-          {products.length} {products.length === 1 ? 'product' : 'products'}
+          {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
         </Text>
       </View>
+
+      {/* Filtros */}
+      <View style={styles.filtersContainer}>
+        {/* Filtro por categoría */}
+        <View style={styles.filterGroup}>
+          <Text style={styles.filterLabel}>Category</Text>
+          <View style={styles.filterChipsContainer}>
+            {categories.map((cat) => (
+              <TouchableOpacity
+                key={cat}
+                style={[
+                  styles.filterChip,
+                  selectedCategory === cat && styles.filterChipActive
+                ]}
+                onPress={() => setSelectedCategory(cat)}
+              >
+                <Text style={[
+                  styles.filterChipText,
+                  selectedCategory === cat && styles.filterChipTextActive
+                ]}>
+                  {cat === 'all' ? 'All' : cat}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      </View>
+
       <FlatList
-        data={products}
+        data={filteredProducts}
         renderItem={renderProduct}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.listContainer}
@@ -192,11 +255,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    padding: 12,
   },
   productImage: {
-    width: '100%',
-    height: 200,
+    width: 80,
+    height: 80,
     backgroundColor: '#e5e7eb',
+    borderRadius: 8,
   },
   placeholderImage: {
     justifyContent: 'center',
@@ -204,43 +271,43 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     color: '#9ca3af',
-    fontSize: 16,
+    fontSize: 10,
   },
   productInfo: {
-    padding: 16,
+    flex: 1,
+    marginLeft: 12,
   },
   productName: {
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#1f2937',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   productBrand: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#14b8a6',
     fontWeight: '600',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   productModel: {
     fontSize: 12,
     color: '#6b7280',
-    marginBottom: 8,
-  },
-  productDescription: {
-    fontSize: 14,
-    color: '#4b5563',
-    lineHeight: 20,
-    marginBottom: 12,
+    marginBottom: 4,
   },
   productPrice: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#14b8a6',
-    marginBottom: 8,
+    marginTop: 4,
   },
-  productStock: {
+  productDescription: {
     fontSize: 12,
-    color: '#6b7280',
+    color: '#4b5563',
+    lineHeight: 18,
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#e5e7eb',
   },
   loadingText: {
     marginTop: 12,
@@ -271,5 +338,50 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 16,
     color: '#6b7280',
+  },
+  // Filtros
+  filtersContainer: {
+    backgroundColor: '#ffffff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  filterGroup: {
+    marginBottom: 4,
+  },
+  filterLabel: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#6b7280',
+    marginBottom: 6,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  filterChipsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  filterChip: {
+    backgroundColor: '#f3f4f6',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+  },
+  filterChipActive: {
+    backgroundColor: '#14b8a6',
+    borderColor: '#14b8a6',
+  },
+  filterChipText: {
+    fontSize: 12,
+    color: '#4b5563',
+    fontWeight: '500',
+  },
+  filterChipTextActive: {
+    color: '#ffffff',
+    fontWeight: '600',
   },
 });
