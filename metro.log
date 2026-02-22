@@ -1,2 +1,146 @@
+nohup: ignoring input
 
 Welcome to React Native v0.82
+Starting dev server on http://0.0.0.0:8081
+
+
+                        ▒▒▓▓▓▓▒▒
+                     ▒▓▓▓▒▒░░▒▒▓▓▓▒
+                  ▒▓▓▓▓░░░▒▒▒▒░░░▓▓▓▓▒
+                 ▓▓▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▓▓
+                 ▓▓░░░░░▒▓▓▓▓▓▓▒░░░░░▓▓
+                 ▓▓░░▓▓▒░░░▒▒░░░▒▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▒▒▒▒▓▓▓▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░▓▓
+                 ▓▓▒░░▒▒▓▓▓▓▓▓▓▓▒░░░▒▓▓
+                  ▒▓▓▓▒░░░▒▓▓▒░░░▒▓▓▓▒
+                     ▒▓▓▓▒░░░░▒▓▓▓▒
+                        ▒▒▓▓▓▓▒▒
+
+
+ WARN  the transform cache was reset.
+                Welcome to Metro v0.83.3
+              Fast - Scalable - Integrated
+
+
+ INFO  Dev server ready. Press Ctrl+C to exit.
+ INFO  Interactive mode is not supported in this environment
+ BUNDLE  ./index.js ░░░░░░░░░░░░░░░░ 0.0% (0/1)
+ PREBUNDLE  ./index.js ░░░░░░░░░░░░░░░░ 0.0% (0/1)
+transform[stderr]: [baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ BUNDLE  ./index.js ░░░░░░░░░░░░░░░░ 0.0% (0/1)
+ PREBUNDLE  ./index.js ░░░░░░░░░░░░░░░░ 0.0% (0/1)
+ BUNDLE  ./index.js ░░░░░░░░░░░░░░░░ 1.0% (1/5)
+ PREBUNDLE  ./index.js ░░░░░░░░░░░░░░░░ 4.0% (2/5)
+transform[stderr]: [baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+transform[stderr]: [baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+transform[stderr]: [baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ BUNDLE  ./index.js ▓░░░░░░░░░░░░░░░ 9.0% (3/5)
+ PREBUNDLE  ./index.js ▓░░░░░░░░░░░░░░░ 9.0% (3/5)
+transform[stderr]: [baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ BUNDLE  ./index.js ▓▓░░░░░░░░░░░░░░ 16.0% (5/110)
+ PREBUNDLE  ./index.js ▓▓░░░░░░░░░░░░░░ 16.0% (11/120)
+transform[stderr]: [baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ BUNDLE  ./index.js ▓▓░░░░░░░░░░░░░░ 16.0% (5/110)
+ PREBUNDLE  ./index.js ▓▓░░░░░░░░░░░░░░ 16.0% (26/158)
+ BUNDLE  ./index.js ▓▓░░░░░░░░░░░░░░ 16.0% (5/110)
+ PREBUNDLE  ./index.js ▓▓░░░░░░░░░░░░░░ 16.0% (79/220)
+ BUNDLE  ./index.js ▓▓░░░░░░░░░░░░░░ 16.0% (19/147)
+ PREBUNDLE  ./index.js ▓▓▓░░░░░░░░░░░░░ 19.8% (110/263)
+ BUNDLE  ./index.js ▓▓░░░░░░░░░░░░░░ 16.0% (86/223)
+ PREBUNDLE  ./index.js ▓▓▓░░░░░░░░░░░░░ 19.8% (110/263)
+ BUNDLE  ./index.js ▓▓▓░░░░░░░░░░░░░ 19.5% (109/259)
+ PREBUNDLE  ./index.js ▓▓▓▓░░░░░░░░░░░░ 27.3% (160/306)
+ BUNDLE  ./index.js ▓▓▓░░░░░░░░░░░░░ 19.5% (109/259)
+ PREBUNDLE  ./index.js ▓▓▓▓▓░░░░░░░░░░░ 34.0% (235/403)
+ BUNDLE  ./index.js ▓▓▓░░░░░░░░░░░░░ 23.2% (140/291)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 38.8% (261/453)
+ BUNDLE  ./index.js ▓▓▓▓▓░░░░░░░░░░░ 31.5% (209/379)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 38.8% (262/704)
+ BUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 37.8% (259/452)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 38.8% (276/707)
+ BUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 37.8% (262/459)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 38.8% (321/729)
+ BUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 37.8% (262/459)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 38.8% (408/767)
+ BUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 37.8% (267/705)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 38.8% (452/869)
+ BUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 37.8% (320/730)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 38.8% (458/869)
+ BUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 37.8% (335/732)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓░░░░░░░░░ 43.8% (583/881)
+ BUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 37.8% (379/754)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓░░░░░░░ 62.3% (698/884)
+ BUNDLE  ./index.js ▓▓▓▓▓▓░░░░░░░░░░ 37.8% (456/869)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓░░░░░░ 65.7% (718/886)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓░░░░░░░░ 52.3% (639/884)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓░░░░░░ 65.7% (721/892)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓░░░░░░░ 62.3% (698/884)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓░░░░░░ 67.0% (740/907)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓░░░░░░░ 62.3% (698/884)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓░░░░░░ 67.0% (741/907)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓░░░░░░░ 62.3% (698/884)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓░░░░░ 73.0% (793/928)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓░░░░░░ 66.3% (729/895)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░ 82.8% (881/968)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓░░░░░░ 66.6% (740/907)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░ 82.8% (882/999)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓░░░░░░ 66.7% (741/907)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░ 82.8% (882/999)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓░░░░░ 75.0% (809/935)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░ 82.8% (882/999)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░ 82.8% (881/968)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░ 82.8% (908/1022)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░ 82.8% (915/1033)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 89.6% (997/1053)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 90.9% (1005/1054)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 94.8% (1042/1070)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 97.0% (1084/1107)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 96.7% (1086/1116)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 97.0% (1120/1149)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 96.7% (1129/1155)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 97.0% (1147/1171)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 97.8% (1159/1172)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.7% (1175/1177)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.8% (1186/1187)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.8% (1186/1187)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.8% (1186/1187)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.8% (1186/1187)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1187/1187)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.8% (1186/1187)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1301/2837)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1187/2837)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1590/2837)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1187/2837)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1980/2837)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1187/2837)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2383/2837)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1187/2837)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2787/2837)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1736/2837)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2828/2837)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2104/2837)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2828/2837)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2461/2837)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2828/2837)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2838/2840)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2840/2847)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2873/2930)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2888/2937)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2949/2952)
+ PREBUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2944/2952)
+ PREBUNDLE  ./index.js 
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2951/2952)
+ BUNDLE  ./index.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (2952/2952)
+ BUNDLE  ./index.js 
+ INFO  Connection established to app='com.smartopsmobilenative' on device='sdk_gphone64_x86_64 - 16 - API 36'.
+ INFO  [1m[7m💡 JavaScript logs have moved![22m They can now be viewed in React Native DevTools. Tip: Type [1mj[22m in the terminal to open (requires Google Chrome or Microsoft Edge).[27m
+ INFO  Connection closed to device='sdk_gphone64_x86_64 - 16 - API 36' for app='com.smartopsmobilenative' with code='1006' and reason=''.
+ BUNDLE  ./index.js ░░░░░░░░░░░░░░░░ 0.0% (0/1)
+ BUNDLE  ./index.js 
+ INFO  Connection established to app='com.smartopsmobilenative' on device='sdk_gphone64_x86_64 - 16 - API 36'.
+ ERROR  [timeout] connection terminated with Device for app='com.smartopsmobilenative' on device='sdk_gphone64_x86_64 - 16 - API 36' after not responding for 60 seconds.
+ INFO  Connection closed to device='sdk_gphone64_x86_64 - 16 - API 36' for app='com.smartopsmobilenative' with code='1006' and reason=''.
+ BUNDLE  ./index.js ░░░░░░░░░░░░░░░░ 0.0% (0/1)
+ BUNDLE  ./index.js 
+ INFO  Connection established to app='com.smartopsmobilenative' on device='sdk_gphone64_x86_64 - 16 - API 36'.

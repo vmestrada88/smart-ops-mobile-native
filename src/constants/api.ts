@@ -4,7 +4,11 @@
  * Central configuration for API endpoints
  */
 
-const API_BASE_URL = 'https://smartsolutionfl.com/api';
+// Change this based on your environment
+// Development: 'http://localhost:5000/api' or 'http://YOUR_IP:5000/api'
+// Production: 'https://smartsolutionfl.com/api' (requires SSL certificate)
+// EC2 without SSL: 'http://3.128.196.83/api'
+const API_BASE_URL = 'http://3.128.196.83/api';
 
 export const API_ENDPOINTS = {
   products: `${API_BASE_URL}/products`,
