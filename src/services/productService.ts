@@ -17,6 +17,18 @@ export interface Product {
   brand?: string;
   model?: string;
   stock_quantity?: number;
+  quantity?: number;
+}
+
+export interface CreateProductPayload {
+  name: string;
+  description?: string;
+  priceBuy: number;
+  priceSell: number;
+  quantity: number;
+  category?: string;
+  brand?: string;
+  model?: string;
 }
 
 /**
@@ -68,6 +80,34 @@ export const getProductById = async (id: number): Promise<Product> => {
     return data;
   } catch (error) {
     console.error(`Error fetching product ${id}:`, error);
+    throw error;
+  }
+};
+
+export const createProduct = async (payload: CreateProductPayload, token?: string): Promise<Product> => {
+  try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    const response = await fetch(API_ENDPOINTS.products, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data?.product ?? data;
+  } catch (error) {
+    console.error('Error creating product:', error);
     throw error;
   }
 };

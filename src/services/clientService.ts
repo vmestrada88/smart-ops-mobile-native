@@ -37,6 +37,21 @@ export interface Client {
   jobs?: Job[];
 }
 
+export interface CreateClientPayload {
+  companyName: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  status?: 'prospect' | 'active' | 'inactive';
+  contacts?: Array<{
+    name: string;
+    email?: string;
+    phone?: string;
+    role?: string;
+  }>;
+}
+
 /**
  * Fetch all clients from the API
  * @param {string} token - Authentication token
@@ -100,6 +115,34 @@ export const getClientById = async (id: number, token?: string): Promise<Client>
     return data;
   } catch (error) {
     console.error(`Error fetching client ${id}:`, error);
+    throw error;
+  }
+};
+
+export const createClient = async (payload: CreateClientPayload, token?: string): Promise<Client> => {
+  try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    const response = await fetch(API_ENDPOINTS.clients, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data?.client ?? data;
+  } catch (error) {
+    console.error('Error creating client:', error);
     throw error;
   }
 };
