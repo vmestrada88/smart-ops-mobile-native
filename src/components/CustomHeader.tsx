@@ -29,8 +29,14 @@ export default function CustomHeader({
 
   const handleGoHome = () => {
     // Navigate to appropriate dashboard based on user role
+    if (!user?.role) {
+      navigation.navigate('Home');
+      return;
+    }
     if (user?.role === 'admin') {
       navigation.navigate('AdminDashboard');
+    } else if (user?.role === 'technician') {
+      navigation.navigate('TechnicianDashboard');
     } else {
       navigation.navigate('UserDashboard');
     }

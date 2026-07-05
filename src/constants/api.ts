@@ -19,6 +19,8 @@ export const API_ENDPOINTS = {
   invoices: `${API_BASE_URL}/invoices`,
   proposals: `${API_BASE_URL}/proposals`,
   jobs: `${API_BASE_URL}/jobs`,
+  cart: `${API_BASE_URL}/cart`,
+  orders: `${API_BASE_URL}/orders`,
 };
 
 export default API_BASE_URL;

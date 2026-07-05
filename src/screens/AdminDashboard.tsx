@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { Send, SendHorizontal, DollarSign, CircleDollarSign, Users, Package, Calendar, IdCard } from 'lucide-react-native';
+import { Send, SendHorizontal, DollarSign, CircleDollarSign, Users, Package, Calendar, IdCard, ShoppingCart, ClipboardList } from 'lucide-react-native';
 
 /**
  * AdminDashboard Component
@@ -36,6 +36,45 @@ export default function AdminDashboard({ navigation }: any) {
             <View style={styles.cardTextContainer}>
               <Text style={styles.featureTitle}>Inventory</Text>
               <Text style={styles.featureDescription}>Manage products and stock levels</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.featureCard}
+          onPress={() => navigation.navigate('Products')}
+        >
+          <View style={styles.cardHeader}>
+            <ShoppingCart size={32} color="#14b8a6" />
+            <View style={styles.cardTextContainer}>
+              <Text style={styles.featureTitle}>Shop / Products</Text>
+              <Text style={styles.featureDescription}>Browse products and add them to cart</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.featureCard}
+          onPress={() => navigation.navigate('Cart')}
+        >
+          <View style={styles.cardHeader}>
+            <Package size={32} color="#14b8a6" />
+            <View style={styles.cardTextContainer}>
+              <Text style={styles.featureTitle}>Cart</Text>
+              <Text style={styles.featureDescription}>Review items and checkout</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.featureCard}
+          onPress={() => navigation.navigate('Orders')}
+        >
+          <View style={styles.cardHeader}>
+            <ClipboardList size={32} color="#14b8a6" />
+            <View style={styles.cardTextContainer}>
+              <Text style={styles.featureTitle}>Orders</Text>
+              <Text style={styles.featureDescription}>View your order history</Text>
             </View>
           </View>
         </TouchableOpacity>

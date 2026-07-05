@@ -8,10 +8,13 @@ import {
   Image,
   TouchableOpacity,
   RefreshControl,
-  ScrollView,
+  Alert,
 } from 'react-native';
 import { getProducts, Product } from '../services/productService';
-import { ChevronDown } from 'lucide-react-native';
+import { ShoppingCart } from 'lucide-react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../hooks/useAuth';
+import { addToCart, fetchCart } from '../services/cartService';
 
 /**
  * ProductsScreen Component
@@ -19,11 +22,15 @@ import { ChevronDown } from 'lucide-react-native';
  * Displays a list of products from the Smart Ops API
  */
 export default function ProductsScreen() {
+  const navigation = useNavigation<any>();
+  const { token, isAuthenticated } = useAuth();
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [cartCount, setCartCount] = useState(0);
   
   // Filtros
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -57,6 +64,44 @@ export default function ProductsScreen() {
     loadProducts();
   }, []);
 
+  const loadCartCount = async () => {
+    if (!token) {
+      setCartCount(0);
+      return;
+    }
+    try {
+      const data = await fetchCart(token);
+      const count = Array.isArray(data)
+        ? data.reduce((sum, item) => sum + (item.quantity || 0), 0)
+        : 0;
+      setCartCount(count);
+    } catch (e) {
+      console.error('Error loading cart count:', e);
+    }
+  };
+
+  useEffect(() => {
+    loadCartCount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
+
+  const handleAddToCart = async (productId: number) => {
+    if (!isAuthenticated || !token) {
+      Alert.alert('Sign in required', 'Please sign in to add items to cart');
+      navigation.navigate('Login');
+      return;
+    }
+
+    try {
+      await addToCart(productId, 1, token);
+      await loadCartCount();
+      Alert.alert('Added to cart', 'Item added successfully');
+    } catch (e) {
+      console.error('Error adding to cart:', e);
+      Alert.alert('Error', 'Failed to add to cart');
+    }
+  };
+
   /**
    * Get unique categories from products
    */
@@ -88,10 +133,8 @@ export default function ProductsScreen() {
     const isExpanded = expandedId === item.id;
 
     return (
-      <TouchableOpacity 
+      <View
         style={styles.productCard}
-        onPress={() => setExpandedId(isExpanded ? null : item.id)}
-        activeOpacity={0.7}
       >
         {item.image_url ? (
           <Image
@@ -105,29 +148,36 @@ export default function ProductsScreen() {
           </View>
         )}
         <View style={styles.productInfo}>
-          <Text style={styles.productName} numberOfLines={2}>
-            {item.name}
-          </Text>
-          {item.brand && (
-            <Text style={styles.productBrand}>{item.brand}</Text>
-          )}
-          {item.model && (
-            <Text style={styles.productModel}>Model: {item.model}</Text>
-          )}
-          {item.priceSell !== undefined && (
-            <Text style={styles.productPrice}>
-              ${item.priceSell.toFixed(2)}
+          <TouchableOpacity
+            activeOpacity={0.85}
+            onPress={() => setExpandedId(isExpanded ? null : item.id)}
+            style={{ flex: 1 }}
+          >
+            <Text style={styles.productName} numberOfLines={2}>
+              {item.name}
             </Text>
-          )}
-          
+            {item.brand && <Text style={styles.productBrand}>{item.brand}</Text>}
+            {item.model && <Text style={styles.productModel}>Model: {item.model}</Text>}
+            {item.priceSell !== undefined && (
+              <Text style={styles.productPrice}>${item.priceSell.toFixed(2)}</Text>
+            )}
+          </TouchableOpacity>
+
           {/* Descripción expandible */}
-          {isExpanded && item.description && (
-            <Text style={styles.productDescription}>
-              {item.description}
-            </Text>
-          )}
+          {isExpanded && item.description ? (
+            <Text style={styles.productDescription}>{item.description}</Text>
+          ) : null}
+
+          <TouchableOpacity
+            style={[styles.addToCartButton, !isAuthenticated && styles.addToCartButtonDisabled]}
+            onPress={() => handleAddToCart(item.id)}
+            disabled={!isAuthenticated}
+          >
+            <ShoppingCart size={16} color="#ffffff" />
+            <Text style={styles.addToCartButtonText}>Add to Cart</Text>
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   };
 
@@ -154,10 +204,17 @@ export default function ProductsScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Products</Text>
-        <Text style={styles.headerSubtitle}>
-          {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
-        </Text>
+        <View>
+          <Text style={styles.headerTitle}>Products</Text>
+          <Text style={styles.headerSubtitle}>
+            {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
+          </Text>
+        </View>
+
+        <TouchableOpacity style={styles.cartButton} onPress={() => navigation.navigate('Cart')}>
+          <ShoppingCart size={18} color="#14b8a6" />
+          <Text style={styles.cartButtonText}>Cart ({cartCount})</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Filtros */}
@@ -228,6 +285,10 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     borderBottomWidth: 1,
     borderBottomColor: '#e5e7eb',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 12,
   },
   headerTitle: {
     fontSize: 28,
@@ -276,6 +337,7 @@ const styles = StyleSheet.create({
   productInfo: {
     flex: 1,
     marginLeft: 12,
+    gap: 10,
   },
   productName: {
     fontSize: 15,
@@ -308,6 +370,40 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     borderTopWidth: 1,
     borderTopColor: '#e5e7eb',
+  },
+  cartButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 12,
+    backgroundColor: '#ecfeff',
+  },
+  cartButtonText: {
+    fontSize: 13,
+    fontWeight: '900',
+    color: '#14b8a6',
+  },
+  addToCartButton: {
+    marginTop: 6,
+    backgroundColor: '#14b8a6',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  addToCartButtonDisabled: {
+    backgroundColor: '#93c5bd',
+  },
+  addToCartButtonText: {
+    color: '#ffffff',
+    fontSize: 13,
+    fontWeight: '900',
+    textAlign: 'center',
   },
   loadingText: {
     marginTop: 12,

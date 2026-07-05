@@ -3,7 +3,7 @@
  * Handles user authentication with email and password
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -20,10 +20,24 @@ import { useAuth } from '../hooks/useAuth';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
-  const { login } = useAuth();
+  const { login, isAuthenticated, user, loading: authLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (!isAuthenticated || !user?.role) return;
+
+    const userRole = user.role;
+    if (userRole === 'admin') {
+      navigation.navigate('AdminDashboard' as never);
+    } else if (userRole === 'technician') {
+      navigation.navigate('TechnicianDashboard' as never);
+    } else {
+      navigation.navigate('UserDashboard' as never);
+    }
+  }, [authLoading, isAuthenticated, navigation, user]);
 
   const handleLogin = async () => {
     // Validation
@@ -45,6 +59,8 @@ export default function LoginScreen() {
       
       if (userRole === 'admin') {
         navigation.navigate('AdminDashboard' as never);
+      } else if (userRole === 'technician') {
+        navigation.navigate('TechnicianDashboard' as never);
       } else {
         navigation.navigate('UserDashboard' as never);
       }
@@ -61,6 +77,11 @@ export default function LoginScreen() {
   };
 
   return (
+    authLoading ? (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#14b8a6" />
+      </View>
+    ) : (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
@@ -112,6 +133,7 @@ export default function LoginScreen() {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
+    )
   );
 }
 
